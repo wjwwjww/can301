@@ -50,8 +50,8 @@ public class PostimageController {
             dir.mkdirs();
         }
         try {
-            image.transferTo(new File(basePath + fileName));
-            String filePath = basePath + fileName;
+            image.transferTo(new File(dir.getAbsoluteFile()+"/" + fileName));
+            String filePath = dir.getAbsolutePath()+"/" + fileName;
 //            System.out.println(filePath);
 //            System.out.println(id);
             postimageMapper.insert(id, filePath);
@@ -71,9 +71,9 @@ public class PostimageController {
 //
 //                fileNames.add(fileName);
 //            }
-
+            File dir = new File(basePath);
             for(String fileName:fileNames){
-            FileInputStream fileInputStream=  new FileInputStream(new File(fileName));
+            FileInputStream fileInputStream=  new FileInputStream(new File(dir.getAbsoluteFile()+"/"+fileName));
             ServletOutputStream outputStream =response.getOutputStream();
             response.setContentType("image/jpeg");
             int len=0;

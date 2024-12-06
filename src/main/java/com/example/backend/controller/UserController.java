@@ -79,7 +79,7 @@ public class UserController {
                 dir.mkdirs();
             }
             try {
-                avatar.transferTo(new File(basePath + fileName));
+                avatar.transferTo(new File(dir.getAbsoluteFile()+"/" + fileName));
                 String filePath = basePath + fileName;
                 System.out.println(filePath);
                 System.out.println(id);
@@ -94,11 +94,12 @@ public class UserController {
     @GetMapping("/downloadavatar")
     public void download(Integer id, HttpServletResponse response){
         try {
+            File dir = new File(basePath);
             String fileName=  userMapper.getImageById(id);
             File file = new File(fileName);
 
             System.out.println(fileName);
-            FileInputStream fileInputStream=  new FileInputStream(new File(fileName));
+            FileInputStream fileInputStream=  new FileInputStream(new File(dir.getAbsoluteFile()+"/"+fileName));
             ServletOutputStream outputStream =response.getOutputStream();
             response.setContentType("image/jpeg");
             int len=0;
